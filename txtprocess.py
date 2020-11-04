@@ -2,8 +2,13 @@ import struct
 import os
 import re
 
+
+def s16(value):
+    return  -(value & 0x8000) | (value & 0x7fff)
+
+
 if __name__ == "__main__":
-    filename = 'aec_output'
+    filename = 'tmp'
     filepath = './'
 
     file = open(filepath + filename + '.txt', 'r')
@@ -38,8 +43,9 @@ if __name__ == "__main__":
             if len(qww) > 4:
                 continue
             a = qww[2:] + qww[:2]                        # 高低位拼接 例： 1234 -> 3412
-            print(a)
-            fileNew.write(a+'\n')
+            b = str(s16(int(a, 16)))
+            print(b)
+            fileNew.write(b+'\n')
 
     file.close()
     fileNew.close()
